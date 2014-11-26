@@ -28,8 +28,8 @@
 		async = module.parent.require('async'),
 
 		constants = Object.freeze({
-			type: '',	// Either 'oauth' or 'oauth2'
-			name: '',	// Something unique to your OAuth provider in lowercase, like "github", or "nodebb"
+			type: 'oauth2',	// Either 'oauth' or 'oauth2'
+			name: 'main-app',	// Something unique to your OAuth provider in lowercase, like "github", or "nodebb"
 			oauth: {
 				requestTokenURL: '',
 				accessTokenURL: '',
@@ -38,12 +38,12 @@
 				consumerSecret: ''
 			},
 			oauth2: {
-				authorizationURL: '',
-				tokenURL: '',
-				clientID: '',
-				clientSecret: ''
+				authorizationURL: 'http://localhost:3000/api/clients',
+				tokenURL: 'http://localhost:3000/api/oauth2/token',
+				clientID: 'this_is_my_id',
+				clientSecret: 'this_is_my_secret'
 			},
-			userRoute: ''	// This is the address to your app's "user profile" API endpoint (expects JSON)
+			userRoute: 'http://localhost:3000/api/users/me'	// This is the address to your app's "user profile" API endpoint (expects JSON)
 		}),
 		configOk = false,
 		OAuth = {}, passportOAuth, opts;
@@ -143,8 +143,8 @@
 		// console.log(data);
 
 		var profile = {};
-		profile.id = data.id;
-		profile.displayName = data.name;
+		profile.id = data._id;
+		profile.displayName = data.username;
 		profile.emails = [{ value: data.email }];
 
 		// Do you want to automatically make somebody an admin? This line might help you do that...
